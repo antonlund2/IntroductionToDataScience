@@ -1,0 +1,20 @@
+SELECT * FROM (
+SELECT A.docid as docid1, B.docid as docid2, SUM(A.count * B.count) as score FROM 
+    (SELECT * FROM frequency
+    UNION
+    SELECT 'q' as docid, 'washington' as term, 1 as count 
+    UNION
+    SELECT 'q' as docid, 'taxes' as term, 1 as count
+    UNION 
+    SELECT 'q' as docid, 'treasury' as term, 1 as count) A
+INNER JOIN 
+	(SELECT * FROM frequency
+    UNION
+    SELECT 'q' as docid, 'washington' as term, 1 as count 
+    UNION
+    SELECT 'q' as docid, 'taxes' as term, 1 as count
+    UNION 
+    SELECT 'q' as docid, 'treasury' as term, 1 as count) B
+ON A.term = B.term
+GROUP BY A.docid, B.docid) x
+WHERE x.docid1 = 'q';

@@ -1,0 +1,6 @@
+SELECT count(*) FROM(
+    SELECT count(*) as count FROM frequency
+    WHERE term = 'transactions' OR term = 'world'
+    GROUP BY docid
+)
+WHERE count = 2;
